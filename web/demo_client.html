@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MolCaptcha Demo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div style="max-width: 320px; margin: 120px auto;">
+    <div class="alert" role="alert" id="alert_text"></div>
+    <img style="margin: 10px auto;" id="captcha_img" />
+    <input style="margin: 10px auto;" class="form-control" id="answer" placeholder="请输入图中物质的化学式" />
+    <button style="margin: 10px auto;" class="btn btn-lg btn-primary btn-block" onclick="verify($('#answer').val(), false)" id="verify_button">验证</button>
+</div>
+</body>
+<script
+  src="https://code.jquery.com/jquery-3.4.0.min.js"
+  integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+  crossorigin="anonymous"></script>
+<script>
+    function verify(answer, isFirstTime) {
+        $.ajax({
+            url: "http://molcaptcha.imtwice.cn:5000/molcaptcha",
+            context: document.body,
+            data: {
+                'answer': answer
+            }
+        }).done(function (data) {
+            $('#captcha_img').prop('src', data.captcha);
+            if(!isFirstTime) {
+                $('#alert_text').show();
+                console.log("hello");
+                if (data.result) {
+                    $("#alert_text").prop('class', 'alert alert-success');
+                    $("#alert_text").text("Yes");
+                } else {
+                    $("#alert_text").prop('class', 'alert alert-warning');
+                    $("#alert_text").text("No");
+                }
+            }
+        });
+    }
+    $('#alert_text').hide();
+    verify('', true);
+</script>
+</html>
