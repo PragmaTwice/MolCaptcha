@@ -25,6 +25,9 @@
             context: document.body,
             data: {
                 'answer': answer
+            },
+            xhrFields: {
+            	withCredentials: true
             }
         }).done(function (data) {
             $('#captcha_img').prop('src', data.captcha);

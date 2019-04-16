@@ -24,6 +24,8 @@ def run():
         "result": result
     }))
     resp.headers['Content-Type'] = 'application/json'
+    resp.headers['Access-Control-Allow-Origin'] = 'http://molcaptcha.imtwice.cn'
+    resp.headers['Access-Control-Allow-Credentials'] = 'true'
 
     return resp
 
