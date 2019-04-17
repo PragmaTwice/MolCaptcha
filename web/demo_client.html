@@ -33,7 +33,6 @@
             $('#captcha_img').prop('src', data.captcha);
             if(!isFirstTime) {
                 $('#alert_text').show();
-                console.log("hello");
                 if (data.result) {
                     $("#alert_text").prop('class', 'alert alert-success');
                     $("#alert_text").text("Yes");
